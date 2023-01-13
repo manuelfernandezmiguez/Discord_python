@@ -32,7 +32,7 @@ async def hello(ctx):
 
 testing_servers=[218047836539846657]
 
-@bot.user_command(name="Account Creation Date", guild_ids=testing_servers)  # create a user command for the supplied guilds
+@bot.user_command(name="Account Creation Date", guild_ids='testing_servers')  # create a user command for the supplied guilds
 async def account_creation_date(ctx, member: discord.Member):  # user commands return the member
     await ctx.respond(f"{member.name}'s account was created on {member.created_at}")
 
@@ -54,6 +54,8 @@ async def hello2(ctx):
     embed.set_author(name="Pycord Team", icon_url="https://example.com/link-to-my-image.png")
     embed.set_thumbnail(url="https://example.com/link-to-my-thumbnail.png")
     embed.set_image(url="https://example.com/link-to-my-banner.png")
+
+    
  
     await ctx.respond("Hello! Here's a cool embed.", embed=embed) # Send the embed with some text
 
