@@ -38,13 +38,14 @@ async def account_creation_date(ctx, member: discord.Member):  # user commands r
 
 
 @bot.command()
-async def hello2(ctx):
+
+async def embebido(ctx):
     embed = discord.Embed(
-        title="Comandos dispoñibles do ChumanoBot",
-        description="Un embed no que se explican todos os comandos.",
-        color=discord.Colour.dark_gold, # Pycord provides a class with default colors you can choose from
+        title="My Amazing Embed",
+        description="Embeds are super easy, barely an inconvenience.",
+        color=discord.Colour.blurple(), # Pycord provides a class with default colors you can choose from
     )
-    embed.add_field(name="record", value="Graba as voces dos diferentes usuarios conectados na mesma canle de voz ** Formato: .wav **")
+    embed.add_field(name="A Normal Field", value="A really nice field with some information. **The description as well as the fields support markdown!**")
 
     embed.add_field(name="Inline Field 1", value="Inline Field 1", inline=True)
     embed.add_field(name="Inline Field 2", value="Inline Field 2", inline=True)
@@ -54,10 +55,12 @@ async def hello2(ctx):
     embed.set_author(name="Pycord Team", icon_url="https://example.com/link-to-my-image.png")
     embed.set_thumbnail(url="https://example.com/link-to-my-thumbnail.png")
     embed.set_image(url="https://example.com/link-to-my-banner.png")
+ 
+    await ctx.respond("Hello! Here's a cool embed.", embed=embed) # Send the embed with some text
 
     
  
-    await ctx.respond("Hello! Here's a cool embed.", embed=embed) # Send the embed with some text
+
 
 connections = {}
 
@@ -160,18 +163,7 @@ def actualizar_victoria(nome: str):
     }, upsert=False).raw_result
     return retorno
 
-class MyModal(discord.ui.Modal):
-    def __init__(self, *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
 
-        self.add_item(discord.ui.InputText(label="Short Input"))
-        self.add_item(discord.ui.InputText(label="Long Input", style=discord.InputTextStyle.long))
-
-    async def callback(self, interaction: discord.Interaction):
-        embed = discord.Embed(title="Modal Results")
-        embed.add_field(name="Short Input", value=self.children[0].value)
-        embed.add_field(name="Long Input", value=self.children[1].value)
-        await interaction.response.send_message(embeds=[embed])
 
 @bot.slash_command()
 async def modal_slash(ctx: discord.ApplicationContext):
