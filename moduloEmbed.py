@@ -1,6 +1,8 @@
 import pymongo
 import discord
 import os # default module
+import random
+from datetime import datetime
 
 client = pymongo.MongoClient("mongodb://localhost:27017")
 db = client["brawl-starts_liga"]
@@ -9,6 +11,16 @@ mycollection2 = db["equipos"]
 
 def clasificacion(ctx):
     return ctx.respond(project_columns())
+
+
+
+
+def tirar(ctx,caras: int,numero: int ):
+    random.seed(datetime.now().timestamp())
+    aleatorio=0
+    for i in numero:
+        aleatorio +=random.randint(1, caras)
+    return ctx.respond(aleatorio)
 
 def project_columns():
     columns = {"_id":0, "nome":1,"puntos":1}

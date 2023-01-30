@@ -39,7 +39,15 @@ async def greet(ctx, user: discord.Member):
 @bot.slash_command(description="comando de probas")
 async def test(ctx):
     role = ctx.guild.get_role(463478871031939075)
-    await ctx.respond(role)
+    canle = ctx.channel
+    guild = ctx.guild
+    avatar = ctx.user.avatar
+    colour = ctx.user.colour
+    creado =ctx.user.created_at
+    spotify= ctx.Spotify.album
+    mensaxe = (f"esta é a canle: {canle}, este é o rol: {role}, este e o guild: {guild}, este é o avatar: {avatar}, é o color: {colour}, é a data de creacion: {creado}")
+    mensaxe2 = (f" spotify? {spotify}")
+    await ctx.respond(mensaxe2)
 
 
 @bot.command()
@@ -103,7 +111,12 @@ async def stop_recording(ctx):
     else:
         await ctx.respond("I am currently not recording here.")  # Respond with this if we aren't recording.
 
+dice = discord.SlashCommandGroup("dice", "random dice related commands")
 
+
+@dice.command()
+async def tirar(ctx,caras: int,numero: int):
+    await moduloEmbed.tirar(ctx, caras,numero)
 
     
 mongo = discord.SlashCommandGroup("mongo", "mongo related commands")
