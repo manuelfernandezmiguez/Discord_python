@@ -27,14 +27,19 @@ async def hello(ctx):
     await ctx.respond("Son chumano, non me silencies!")
 
 @bot.slash_command(name = "partido", description = "Devolve o primeiro partido(exemplo)")
-async def hello(ctx):
+async def partido(ctx):
     await ctx.respond(f"{one_record} éche o primeiro partido recollido")
 
 testing_servers=[218047836539846657]
 
-@bot.user_command(name="Account Creation Date", guild_ids='testing_servers')  # create a user command for the supplied guilds
-async def account_creation_date(ctx, member: discord.Member):  # user commands return the member
-    await ctx.respond(f"{member.name}'s account was created on {member.created_at}")
+@bot.slash_command(description="sauda a alguen")
+async def greet(ctx, user: discord.Member):
+    await ctx.respond(f"Ola {user.mention}")
+
+@bot.slash_command(description="comando de probas")
+async def test(ctx):
+    role = ctx.guild.get_role(463478871031939075)
+    await ctx.respond(role)
 
 
 @bot.command()
@@ -190,5 +195,50 @@ async def leave(ctx):
         await ctx.send("non estou nunha canle de voz")
 
 
+#EXEMPLOS atopados na paxina de guía#
+
+
+class MyView(discord.ui.View):
+    @discord.ui.select( # the decorator that lets you specify the properties of the select menu
+        placeholder = "Choose a Flavor!", # the placeholder text that will be displayed if nothing is selected
+        min_values = 1, # the minimum number of values that must be selected by the users
+        max_values = 1, # the maximum number of values that can be selected by the users
+        options = [ # the list of options from which users can choose, a required field
+            discord.SelectOption(
+                label="Vanilla",
+                description="Pick this if you like vanilla!"
+            ),
+            discord.SelectOption(
+                label="Chocolate",
+                description="Pick this if you like chocolate!"
+            ),
+            discord.SelectOption(
+                label="Strawberry",
+                description="Pick this if you like strawberry!"
+            )
+        ]
+    )
+    async def select_callback(self, select, interaction): # the function called when the user is done selecting options
+        await interaction.response.send_message(f"Awesome! I like {select.values[0]} too!")
+
+
+@bot.command()
+async def flavor(ctx):
+    await ctx.send("Choose a flavor!", view=MyView())
+
+
+class MyView2(discord.ui.View): # Create a class called MyView that subclasses discord.ui.View
+    @discord.ui.button(label="Click me!", style=discord.ButtonStyle.primary, emoji="😎") # Create a button with the label "😎 Click me!" with color Blurple
+    async def button_callback(self, button, interaction):
+        await interaction.response.send_message("You clicked the button!") # Send a message when the button is clicked
+
+@bot.slash_command() # Create a slash command
+async def button(ctx):
+    await ctx.respond("This is a button!", view=MyView2()) # Send a message with our View class that contains the button
+
+
+@bot.command(description="Sends the bot's latency.") # this decorator makes a slash command
+async def ping(ctx): # a slash command will be created with the name "ping"
+    await ctx.respond(f"Pong! Latency is {bot.latency}")
 
 bot.run(os.getenv('TOKEN')) # run the bot with the token
